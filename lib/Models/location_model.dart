@@ -12,6 +12,8 @@ class Location {
   final int type;
   final LatLng position;
   final String description;
+  final String short_desc;
+  final String image;
 
   // BitmapDescriptor? image;
 
@@ -21,6 +23,8 @@ class Location {
     required this.type,
     required this.position,
     required this.description,
+    required this.short_desc,
+    required this.image,
   });
 
   Marker getMarker(CustomInfoWindowController mapController) {
@@ -41,15 +45,10 @@ class Location {
 //   await BitmapDescriptor.fromAssetImage(ImageConfiguration.empty, "images/weekly.png").then((value) => image = value);
 // }
 
-//TODO: Add this
-// factory User.fromJson(Map<String, dynamic> json) {
-//   return User(
-//       uuid: json['uuid'],
-//       username: json['username'],
-//       email: json['email'],
-//       discoveries: json['discoveries']
-//   );
-// }
+
+factory Location.fromJson(Map<String, dynamic> json) {
+  return Location(uuid: json["_id"], name: json["name"], type: json["type"], position: LatLng(json["lat"], json["lng"]), description: json["lcnt"], short_desc: json["scnt"], image: json["img"]);
+}
 }
 
 class InfoPanel extends StatelessWidget {

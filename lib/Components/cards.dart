@@ -139,8 +139,8 @@ class JournalCard extends StatelessWidget {
                   height: 110,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.secondary,
-                    image: const DecorationImage(
-                      image: AssetImage("images/weekly.png"),
+                    image: DecorationImage(
+                      image: AssetImage(location.image),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
