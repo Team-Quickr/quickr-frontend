@@ -38,6 +38,8 @@ dependencies:
   provider: ^6.1.1
   mobile_scanner: ^3.5.2
   http: ^1.1.0
+  google_maps_flutter: ^2.5.0
+  custom_info_window: ^1.0.1
 
 dev_dependencies:
   flutter_test:
