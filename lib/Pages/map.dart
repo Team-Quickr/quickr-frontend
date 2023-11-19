@@ -1,6 +1,8 @@
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:quickr/Models/location_mock.dart';
 
 import '../Models/location_model.dart';
 
@@ -16,27 +18,6 @@ class _MapViewState extends State<MapView> {
 
   final LatLng _center = const LatLng(45.76, 21.22);
 
-  final List<Location> locations = [
-    Location(
-        uuid: "test1",
-        name: "Test Location 1",
-        description: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit",
-        type: 1,
-        position: const LatLng(45.75, 21.22)),
-    Location(
-        uuid: "test2",
-        name: "Test Location 2",
-        description: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit",
-        type: 2,
-        position: const LatLng(45.76, 21.22)),
-    Location(
-        uuid: "test3",
-        name: "Test Location 3",
-        description: "Neque porro ",
-        type: 3,
-        position: const LatLng(45.75, 21.215)),
-  ];
-
   Set<Marker> pins = <Marker>{};
 
   @override
@@ -47,7 +28,8 @@ class _MapViewState extends State<MapView> {
 
   @override
   Widget build(BuildContext context) {
-    for (var element in locations) {pins.add(element.getMarker(mapController));}
+    var locations = context.watch<LocationsModel>();
+    for (var element in locations.getLocations()) {pins.add(element.getMarker(mapController));}
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -62,6 +44,8 @@ class _MapViewState extends State<MapView> {
       body: Stack(
         children: <Widget>[
           GoogleMap(
+            compassEnabled: false,
+            myLocationEnabled: true,
             onTap: (position) {
               mapController.hideInfoWindow!();
             },
