@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quickr/Pages/login_page.dart';
 import 'package:quickr/Pages/register_page.dart';
 import './Pages/pg.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blue,
       ),
-      home: RegisterPage(),
+      home: LoginPage(),
     );
   }
 }
