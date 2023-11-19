@@ -27,14 +27,14 @@ List<OnBoarding> onboardingContents = [
 
   OnBoarding(
     title: "Leaderboard",
-    image: 'images/city3.png',
+    image: 'images/city5.png',
     icon: Icons.stars,
     subTitle: "Keep track of all your tracks",
   ),
 
   OnBoarding(
     title: "New Destination",
-    image: 'images/city4.png',
+    image: 'images/city6.png',
     icon: Icons.place,
     subTitle: "Keep track of all your tracks",
   ),
