@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:quickr/Components/cards.dart';
-import 'package:quickr/Pages/map.dart';
+import 'package:quickr/Pages/journal.dart';
 import 'package:quickr/Pages/qr_scanner.dart';
 
 class Homepage extends StatelessWidget {
@@ -162,7 +162,7 @@ class Menu extends StatelessWidget {
               icon: object["icon"],
               color: object["color"],
               fgColor: object["foreground"],
-              page: const MapView(),
+              page: const Journal(),
             ),
           )
       ],
@@ -282,7 +282,7 @@ class StatsCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Your have completed:",
+                        "You have completed:",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.primary,
