@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:quickr/Components/cards.dart';
 import 'package:quickr/Pages/journal.dart';
+import 'package:quickr/Pages/map.dart';
 import 'package:quickr/Pages/qr_scanner.dart';
 
 class Homepage extends StatelessWidget {
@@ -125,24 +126,28 @@ const List<Map<String, dynamic>> menuItems = [
     "icon": Icons.person,
     "color": Color(0xfffcebdc),
     "foreground": Color(0xfff09e54),
+    "page": Journal(),
   },
   {
     "name": "Journal",
     "icon": Icons.book,
     "color": Color(0xffd6edf8),
     "foreground": Color(0xff369cda),
+    "page": Journal(),
   },
   {
     "name": "Badges",
     "icon": Icons.star,
     "color": Color(0xfffcf4db),
     "foreground": Color(0xfff2c94c),
+    "page": Journal(),
   },
   {
     "name": "Discover",
     "icon": Icons.search,
     "color": Color(0xfffcebdc),
     "foreground": Color(0xfff29949),
+    "page": MapView(),
   },
 ];
 
@@ -162,7 +167,7 @@ class Menu extends StatelessWidget {
               icon: object["icon"],
               color: object["color"],
               fgColor: object["foreground"],
-              page: const Journal(),
+              page: object["page"],
             ),
           )
       ],
