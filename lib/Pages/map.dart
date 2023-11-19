@@ -20,16 +20,19 @@ class _MapViewState extends State<MapView> {
     Location(
         uuid: "test1",
         name: "Test Location 1",
+        description: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit",
         type: 1,
         position: const LatLng(45.75, 21.22)),
     Location(
         uuid: "test2",
         name: "Test Location 2",
+        description: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit",
         type: 2,
         position: const LatLng(45.76, 21.22)),
     Location(
         uuid: "test3",
         name: "Test Location 3",
+        description: "Neque porro ",
         type: 3,
         position: const LatLng(45.75, 21.215)),
   ];
@@ -76,8 +79,8 @@ class _MapViewState extends State<MapView> {
           ),
           CustomInfoWindow(
             controller: mapController,
-            height: 75,
-            width: 150,
+            height: 200,
+            width: 300,
             offset: 50,
           ),
         ],
