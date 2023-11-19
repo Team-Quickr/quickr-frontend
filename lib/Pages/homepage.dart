@@ -530,6 +530,27 @@ class EventsHeader extends StatelessWidget {
   }
 }
 
+const List<Map<String, dynamic>> eventItems = [
+  {
+    "name": "UniHack",
+    "color": Color(0xfffcebdc),
+    "image": "images/unihack.png",
+    "location": "The Access Group, Timişoara",
+  },
+  {
+    "name": "iTEC",
+    "color": Color(0xfffcebdc),
+    "image": "images/itec.png",
+    "location": "Haufe Group, Timişoara",
+  },
+  {
+    "name": "Game ON! Festival",
+    "color": Color(0xfffcebdc),
+    "image": "images/gameon.png",
+    "location": "Casa Tineretului, Timişoara",
+  },
+];
+
 class EventsList extends StatelessWidget {
   const EventsList({super.key});
 
@@ -540,13 +561,13 @@ class EventsList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        for (Map<String, dynamic> object in menuItems)
+        for (Map<String, dynamic> object in eventItems)
           Flexible(
             child: EventCard(
               title: object["name"],
-              shortDescription: "Str. Test, Null Island",
+              shortDescription: object["location"],
               color: object["color"],
-              image: 'assets/weekly.png',
+              image: object["image"],
             ),
           )
       ],

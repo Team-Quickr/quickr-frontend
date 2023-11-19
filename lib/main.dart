@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:quickr/Models/location_mock.dart';
+import 'package:quickr/Models/user_model.dart';
 
 import 'Pages/homepage.dart';
 
@@ -23,33 +26,39 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Quickr App',
-      theme: ThemeData(
-        colorScheme: const ColorScheme(
-          onSurfaceVariant: textColorAlternate,
-          brightness: Brightness.light,
-          background: backgroundColor,
-          onBackground: textColor,
-          primary: primaryColor,
-          onPrimary: primaryFgColor,
-          secondary: secondaryColor,
-          onSecondary: secondaryFgColor,
-          tertiary: accentColor,
-          onTertiary: accentFgColor,
-          surface: backgroundColor,
-          onSurface: textColor,
-          error: Brightness.light == Brightness.light
-              ? Color(0xffB3261E)
-              : Color(0xffF2B8B5),
-          onError: Brightness.light == Brightness.light
-              ? Color(0xffFFFFFF)
-              : Color(0xff601410),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => LocationsModel()),
+        ChangeNotifierProvider(create: (context) => UserModel()),
+      ],
+      child: MaterialApp(
+        title: 'Quickr App',
+        theme: ThemeData(
+          colorScheme: const ColorScheme(
+            onSurfaceVariant: textColorAlternate,
+            brightness: Brightness.light,
+            background: backgroundColor,
+            onBackground: textColor,
+            primary: primaryColor,
+            onPrimary: primaryFgColor,
+            secondary: secondaryColor,
+            onSecondary: secondaryFgColor,
+            tertiary: accentColor,
+            onTertiary: accentFgColor,
+            surface: backgroundColor,
+            onSurface: textColor,
+            error: Brightness.light == Brightness.light
+                ? Color(0xffB3261E)
+                : Color(0xffF2B8B5),
+            onError: Brightness.light == Brightness.light
+                ? Color(0xffFFFFFF)
+                : Color(0xff601410),
+          ),
+          textTheme: const TextTheme(),
+          useMaterial3: true,
         ),
-        textTheme: const TextTheme(),
-        useMaterial3: true,
+        home: const Homepage(),
       ),
-      home: const Homepage(),
     );
   }
 }

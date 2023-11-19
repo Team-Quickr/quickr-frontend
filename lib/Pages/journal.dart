@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:quickr/Components/cards.dart';
+import 'package:quickr/Models/location_mock.dart';
 import 'package:quickr/Models/location_model.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
@@ -12,31 +14,10 @@ class Journal extends StatefulWidget {
 }
 
 class _JournalState extends State<Journal> {
-  final List<Location> locations = [
-    Location(
-        uuid: "test1",
-        name: "Test Location 1",
-        description:
-            "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit",
-        type: 1,
-        position: const LatLng(45.75, 21.22)),
-    Location(
-        uuid: "test2",
-        name: "Test Location 2",
-        description:
-            "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit",
-        type: 2,
-        position: const LatLng(45.76, 21.22)),
-    Location(
-        uuid: "test3",
-        name: "Test Location 3",
-        description: "Neque porro ",
-        type: 3,
-        position: const LatLng(45.75, 21.215)),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    var locations = context.watch<LocationsModel>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Journal",
@@ -51,7 +32,7 @@ class _JournalState extends State<Journal> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(20),
-                child: searchableJournal(),
+                child: searchableJournal(locations),
               ),
             ),
           ],
@@ -60,15 +41,15 @@ class _JournalState extends State<Journal> {
     );
   }
 
-  Widget searchableJournal() {
+  Widget searchableJournal(LocationsModel locations) {
     return SearchableList<Location>(
       style: const TextStyle(fontSize: 25),
       builder: (list, index, item) {
         return JournalCard(location: item);
       },
-      initialList: locations,
+      initialList: locations.getLocations(),
       filter: (p0) {
-        return locations.where((element) => element.name.contains(p0)).toList();
+        return locations.getLocations().where((element) => element.name.contains(p0)).toList();
       },
       reverse: false,
       emptyWidget: const EmptyView(),

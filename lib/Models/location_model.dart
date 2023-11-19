@@ -4,6 +4,7 @@ import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:quickr/Pages/detail.dart';
 
 class Location {
   final String uuid;
@@ -24,15 +25,12 @@ class Location {
 
   Marker getMarker(CustomInfoWindowController mapController) {
     return Marker(
+      icon: BitmapDescriptor.defaultMarkerWithHue(type * 60),
       markerId: MarkerId(uuid),
       position: position,
       onTap: () {
         mapController.addInfoWindow!(
-          InfoPanel(
-            name: name,
-            description: description,
-            difficulty: type,
-          ),
+          InfoPanel(location: this),
           position,
         );
       },
@@ -55,14 +53,9 @@ class Location {
 }
 
 class InfoPanel extends StatelessWidget {
-  final String name;
-  final String description;
-  final int difficulty;
+  final Location location;
 
-  const InfoPanel({super.key,
-    required this.name,
-    required this.description,
-    required this.difficulty});
+  const InfoPanel({super.key, required this.location});
 
   @override
   Widget build(BuildContext context) {
@@ -96,14 +89,11 @@ class InfoPanel extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        name,
+                        location.name,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Theme
-                              .of(context)
-                              .colorScheme
-                              .primary,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 18,
                         ),
                       ),
@@ -113,50 +103,61 @@ class InfoPanel extends StatelessWidget {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
                 child: SizedBox(
                   width: double.infinity,
-                  child: Text(description),
+                  child: Text(location.description),
                 ),
               ),
-              const Padding(
+              Padding(
                 padding:
-                EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: SizedBox(
                   width: double.infinity,
-                  child: Column(
+                  child: Stack(
                     children: [
-                      Row(
+                      const Column(
                         children: [
-                          Text("Difficulty: ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              )),
-                          StarRating(rating: 2),
-                        ],
-                      ),
-                      SizedBox(height: 5,),
-                      Row(
-                        children: [
-                          Text("Distance: ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              )),
-                          Text("0.5km"),
+                          Row(
+                            children: [
+                              Text("Difficulty: ",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              StarRating(rating: 2),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Text("Distance: ",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              Text("0.5km"),
+                            ],
+                          ),
                         ],
                       ),
                       Align(
-                        alignment: Alignment(1, 1),
-                        heightFactor: 0.01,
+                        alignment: const Alignment(1, 1),
                         child: SizedBox(
                           height: 40,
                           width: 40,
                           child: FittedBox(
                             child: FloatingActionButton(
-                                shape: CircleBorder(),
-
-                                onPressed: null,
-                                child: Icon(Icons.arrow_forward_outlined),
+                              shape: const CircleBorder(),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        Details(location: location),
+                                  ),
+                                );
+                              },
+                              child: const Icon(Icons.arrow_forward_outlined),
                             ),
                           ),
                         ),
@@ -188,26 +189,17 @@ class StarRating extends StatelessWidget {
     if (index >= rating) {
       icon = Icon(
         Icons.star_border,
-        color: Theme
-            .of(context)
-            .colorScheme
-            .tertiary,
+        color: Theme.of(context).colorScheme.tertiary,
       );
     } else if (index > rating - 1 && index < rating) {
       icon = Icon(
         Icons.star_half,
-        color: Theme
-            .of(context)
-            .colorScheme
-            .secondary,
+        color: Theme.of(context).colorScheme.secondary,
       );
     } else {
       icon = Icon(
         Icons.star,
-        color: Theme
-            .of(context)
-            .colorScheme
-            .secondary,
+        color: Theme.of(context).colorScheme.secondary,
       );
     }
     return icon;
@@ -217,6 +209,6 @@ class StarRating extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
         children:
-        List.generate(starCount, (index) => buildStar(context, index)));
+            List.generate(starCount, (index) => buildStar(context, index)));
   }
 }
