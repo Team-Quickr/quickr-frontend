@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:quickr/Components/cards.dart';
+import 'package:quickr/Pages/map.dart';
 import 'package:quickr/Pages/qr_scanner.dart';
 
 class Homepage extends StatelessWidget {
@@ -161,6 +162,7 @@ class Menu extends StatelessWidget {
               icon: object["icon"],
               color: object["color"],
               fgColor: object["foreground"],
+              page: const MapView(),
             ),
           )
       ],
@@ -173,9 +175,11 @@ class MenuCard extends StatelessWidget {
   final IconData icon;
   final Color color;
   final Color fgColor;
+  final Widget page;
 
   const MenuCard(
       {super.key,
+      required this.page,
       required this.name,
       required this.icon,
       required this.color,
@@ -183,47 +187,57 @@ class MenuCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 75,
-          height: 75,
-          decoration: ShapeDecoration(
-            color: color,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+    return GestureDetector(
+      onTap: () {
+        log("clicked");
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => page,
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          Container(
+            width: 75,
+            height: 75,
+            decoration: ShapeDecoration(
+              color: color,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    color: fgColor,
+                  ),
+                ],
+              ),
             ),
           ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  color: fgColor,
-                ),
-              ],
+          const SizedBox(
+            height: 15,
+          ),
+          Text(
+            name,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              // color: Theme.of(context).colorScheme.onBackground,
+              fontSize: 14,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+              height: 0.03,
+              letterSpacing: 0.24,
             ),
-          ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Text(
-          name,
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            // color: Theme.of(context).colorScheme.onBackground,
-            fontSize: 14,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-            height: 0.03,
-            letterSpacing: 0.24,
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }
